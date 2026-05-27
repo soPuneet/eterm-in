@@ -148,7 +148,7 @@ export async function matchAdvisors(input: AdvisorMatchInput): Promise<AdvisorMa
     return [];
   }
 
-  const scored = advisors.map(advisor => {
+  const scored = advisors.map((advisor: any) => {
     const comp = advisor.advisor_competencies;
     let score = 0;
     let total_weight = 0;
