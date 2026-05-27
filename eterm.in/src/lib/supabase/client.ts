@@ -3,8 +3,9 @@ import { createBrowserClient } from '@supabase/ssr'
 export const createClient = () => {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  
-    console.warn('Supabase env vars missing — returning mock client')
+
+  if (!url || !key || url === 'https://placeholder.supabase.co') {
+    console.warn('Supabase env vars missing')
     return {
       from: () => ({
         select: () => ({ data: null, error: null }),
@@ -18,6 +19,6 @@ export const createClient = () => {
       },
     } as any
   }
-  
+
   return createBrowserClient(url, key)
 }
