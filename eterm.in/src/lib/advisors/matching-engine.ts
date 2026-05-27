@@ -192,8 +192,8 @@ export async function matchAdvisors(input: AdvisorMatchInput): Promise<AdvisorMa
   });
 
   return scored
-    .filter(a => a.match_score > 25)
-    .sort((a, b) => b.match_score - a.match_score)
+    .filter((a: any) => a.match_score > 25)
+    .sort((a: any, b: any) => b.match_score - a.match_score)
     .slice(0, 3);
 }
 
