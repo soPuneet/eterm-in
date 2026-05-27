@@ -6,15 +6,34 @@ export const supabase = (() => {
 
   if (!url || !key || url === 'https://placeholder.supabase.co') {
     console.warn('Supabase server env vars missing — returning mock client')
+    
+    // Create a chainable mock that supports .from().select().eq().eq()
+    const createChainable = () => {
+      const chain = {
+        select: () => chain,
+        insert: () => chain,
+        update: () => chain,
+        delete: () => chain,
+        eq: () => chain,
+        neq: () => chain,
+        gt: () => chain,
+        gte: () => chain,
+        lt: () => chain,
+        lte: () => chain,
+        order: () => chain,
+        limit: () => chain,
+        single: () => Promise.resolve({ data: null, error: null }),
+        maybeSingle: () => Promise.resolve({ data: null, error: null }),
+        then: (resolve: any) => Promise.resolve({ data: [], error: null }).then(resolve),
+      }
+      return chain
+    }
+    
     return {
-      from: () => ({
-        select: () => Promise.resolve({ data: null, error: null }),
-        insert: () => Promise.resolve({ data: null, error: null }),
-        update: () => Promise.resolve({ data: null, error: null }),
-        delete: () => Promise.resolve({ data: null, error: null }),
-      }),
+      from: () => createChainable(),
       auth: {
         getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
       },
     } as any
   }
