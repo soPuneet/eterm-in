@@ -6,25 +6,6 @@ export const createClient = () => {
   
   if (!url || !key || url === 'https://placeholder.supabase.co') {
     console.warn('Supabase env vars missing — returning mock client')
-    // Return a mock client that won't throw
-    return {
-      from: () => ({
-        select: () => ({ data: null, error: null }),
-        insert: () => ({ data: null, error: null }),
-        update: () => ({ data: null, error: null }),
-        delete: () => ({ data: null, error: null }),
-      }),
-     
-cat > src/lib/supabase/client.ts << 'EOF'
-import { createBrowserClient } from '@supabase/ssr'
-
-export const createClient = () => {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  
-  if (!url || !key || url === 'https://placeholder.supabase.co') {
-    console.warn('Supabase env vars missing — returning mock client')
-    // Return a mock client that won't throw
     return {
       from: () => ({
         select: () => ({ data: null, error: null }),
