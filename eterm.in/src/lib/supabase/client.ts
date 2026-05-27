@@ -4,7 +4,6 @@ export const createClient = () => {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   
-  if (!url || !key || url === 'https://placeholder.supabase.co') {
     console.warn('Supabase env vars missing — returning mock client')
     return {
       from: () => ({
